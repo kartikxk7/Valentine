@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Babe Will You Be My Valentine? 💖</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff4b6e, #ff85a2);
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.container {
+  padding: 20px;
+  max-width: 500px;
+  margin: auto;
+}
+
+img {
+  width: 100%;
+  border-radius: 20px;
+  margin: 20px 0;
+}
+
+.card {
+  background: rgba(255,255,255,0.15);
+  padding: 20px;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
+button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 30px;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.yes {
+  background: #fff;
+  color: #ff4b6e;
+}
+
+.no {
+  background: rgba(255,255,255,0.3);
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Floating hearts */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 24px;
+  animation: floatUp 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* Lock pulse */
+#lockView {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>Happy Valentine’s Day 💘</h1>
+<p>My Love ❤️Cutuu</p>
+
+<!-- PHOTO HIDDEN INITIALLY -->
+<img src="photo.jpg" alt="My Valentine" id="mainPhoto" class="hidden">
+
+<!-- QUESTION 1 -->
+<div class="card">
+  <p><b>Question 1:</b> Do you believe love grows stronger every day? 💞</p>
+  <button onclick="q1Yes()">Yes 💖</button>
+  <button onclick="q1No()">No 😜</button>
+</div>
+
+<!-- QUESTION 2 -->
+<div class="card hidden" id="q2">
+  <p><b>Question 2:</b> Would you choose me in every lifetime? 🌍❤️</p>
+  <button onclick="nextQ2()">Always 💍</button>
+  <button onclick="q2Never()">Never 🙃</button>
+</div>
+
+<!-- GAME -->
+<div class="card hidden" id="game">
+  <p><b>Mini Game 🎮</b></p>
+  <p>Tap the heart to win 💖</p>
+  <button onclick="winGame()">💗</button>
+</div>
+
+<!-- FINAL QUESTION -->
+<div class="card hidden" id="final">
+  <h2>Jyotika my Cutuu Will you be my Valentine? 🌹</h2>
+  <button class="yes" onclick="sayYes()">YES ❤️</button>
+  <button class="no" onclick="moveNo()">NO 😜</button>
+</div>
+
+<!-- LOVE SECTION -->
+<div class="card hidden" id="love">
+  <h2>You said YES 💖</h2>
+  <p>You are my today, tomorrow & forever 💍</p>
+
+  <button onclick="toggleMusic()">⏯ Play / Pause Song</button>
+  <button onclick="heartBurst()">❤️ Love</button>
+  <button onclick="sprinkle('😘')">😘 Kiss</button>
+  <button onclick="sprinkle('🤗')">🤗 Hug</button>
+
+  <p id="countdown"></p>
+
+  <!-- LOCKED / UNLOCKED -->
+  <div class="card">
+    <div id="lockView">
+      <h1 style="font-size:50px;">🔒</h1>
+      <p><b>Surprise Locked 💝</b></p>
+      <p>Wait for Valentine’s Day ❤️</p>
+    </div>
+
+    <div id="unlockView" class="hidden">
+      <h3>💌 A message just for you</h3>
+      <p>Happy Valentine’s Day my love This Is Our first Valentine I know that we are not together Present But my love is always for you my heart my better half I love you so so so so much ❤️</p>
+      <video width="100%" controls>
+        <source src="video.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</div>
+
+<audio id="song" src="song.mp3"></audio>
+
+<p style="margin-top:20px;">Made with ❤️ by Kartik</p>
+
+</div>
+
+<script>
+function q1Yes() {
+  document.getElementById("q2").classList.remove("hidden");
+  document.getElementById("mainPhoto").classList.remove("hidden");
+}
+
+function q1No() {
+  alert("Nice try 😏 But love doesn’t accept NO 💕");
+}
+
+function q2Never() {
+  alert("Haha 😄 That option is just for fun. There is no Never always forever ❤️");
+}
+
+function nextQ2() {
+  document.getElementById("game").classList.remove("hidden");
+}
+
+function winGame() {
+  document.getElementById("final").classList.remove("hidden");
+}
+
+function sayYes() {
+  document.getElementById("love").classList.remove("hidden");
+  document.getElementById("song").play();
+  startHearts();
+}
+
+function moveNo() {
+  alert("You can’t escape 😜 Valentine accepted 💖");
+}
+
+/* Hearts background */
+function startHearts() {
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "❤️";
+    h.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 6000);
+  }, 400);
+}
+
+/* Music */
+function toggleMusic() {
+  const song = document.getElementById("song");
+  song.paused ? song.play() : song.pause();
+}
+
+/* Effects */
+function heartBurst() {
+  for (let i = 0; i < 12; i++) sprinkle("❤️");
+}
+
+function sprinkle(emoji) {
+  const e = document.createElement("div");
+  e.innerHTML = emoji;
+  e.style.position = "fixed";
+  e.style.left = Math.random() * 100 + "vw";
+  e.style.top = "100vh";
+  e.style.fontSize = "28px";
+  e.style.animation = "floatUp 4s linear";
+  document.body.appendChild(e);
+  setTimeout(() => e.remove(), 4000);
+}
+
+/* COUNTDOWN TIMER */
+const valDate = new Date("Feb 14, 2026 00:00:00").getTime();
+
+setInterval(() => {
+  const now = new Date().getTime();
+  const diff = valDate - now;
+
+  if (diff <= 0) {
+    document.getElementById("countdown").innerHTML = "💖 It’s Valentine’s Day!";
+    document.getElementById("lockView").classList.add("hidden");
+    document.getElementById("unlockView").classList.remove("hidden");
+  } else {
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("countdown").innerHTML =
+      `⏳ ${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`;
+  }
+}, 1000);
+</script>
+
+</body>
+</html>
